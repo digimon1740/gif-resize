@@ -9,8 +9,8 @@ from typing import Tuple
 def resize_gif_using_pillow_and_wand(path, save_as=None, resize_to=None):
     bytes = open(path, "rb").read()
 
-    width = 1080
-    height = 503
+    width = 1280
+    height = 598
     quality = 90
 
     all_frames = extract_and_resize_frames(bytes, (width, height))
@@ -33,8 +33,8 @@ def resize_gif_using_pillow_and_wand(path, save_as=None, resize_to=None):
 def resize_gif_using_pillow(path, save_as=None, resize_to=None):
     bytes = open(path, "rb").read()
 
-    width = 1080
-    height = 503
+    width = 1280
+    height = 598
     quality = 90
 
     all_frames = extract_and_resize_frames(bytes, (width, height))
@@ -70,8 +70,8 @@ def analyseImage(blob):
 def resize_gif_using_wand(path, save_as=None, resize_to=None):
     bytes = open(path, "rb").read()
 
-    width = 1080
-    height = 503
+    width = 1280
+    height = 598
     quality = 90
 
     try:
@@ -89,8 +89,8 @@ def resize_gif_using_wand(path, save_as=None, resize_to=None):
 def resize_gif_using_okky_pillow_and_wand(path, save_as=None, resize_to=None):
     bytes = open(path, "rb").read()
 
-    width = 1080
-    height = 503
+    width = 1280
+    height = 598
     quality = 90
 
     try:
@@ -114,7 +114,7 @@ def extract_and_resize_frames(blob, resize_to=None):
 
     all_frames = []
 
-    size = 1080, 503
+    size = 1280, 598
     try:
         while True:
             if not im.getpalette():
@@ -127,8 +127,9 @@ def extract_and_resize_frames(blob, resize_to=None):
 
             new_frame.paste(im, (0, 0), im.convert('RGBA'))
 
-            new_frame.thumbnail(size, resample=Image.HAMMING)
-            all_frames.append(new_frame)
+            # new_frame.thumbnail(size, resample=Image.HAMMING)
+            # all_frames.append(new_frame)
+            all_frames.append(new_frame.resize(size, resample=Image.HAMMING))
 
             i += 1
             last_frame = new_frame
@@ -164,18 +165,17 @@ def resize_gif_image(blob, width: int, quality: int = None):
 
 
 def main():
+    resize_gif_using_pillow_and_wand('/Users/digimon/Downloads/gif/original.gif',
+                                     save_as='/Users/digimon/Downloads/gif/original_1_using_pillow_and_wand.gif')
 
-    resize_gif_using_pillow_and_wand('/Users/devsh/Downloads/original_1.gif',
-                                     save_as='/Users/devsh/Downloads/original_1_using_pillow_and_wand.gif')
+    resize_gif_using_pillow('/Users/digimon/Downloads/gif/original.gif',
+                            save_as='/Users/digimon/Downloads/gif/original_1_using_pillow.gif')
 
-    resize_gif_using_pillow('/Users/devsh/Downloads/original_1.gif',
-                            save_as='/Users/devsh/Downloads/original_1_using_pillow.gif')
+    resize_gif_using_wand('/Users/digimon/Downloads/gif/original.gif',
+                          save_as='/Users/digimon/Downloads/gif/original_1_using_wand.gif')
 
-    resize_gif_using_wand('/Users/devsh/Downloads/original_1.gif',
-                          save_as='/Users/devsh/Downloads/original_1_using_wand.gif')
-
-    resize_gif_using_okky_pillow_and_wand('/Users/devsh/Downloads/original_1.gif',
-                                          save_as='/Users/devsh/Downloads/original_1_okky_pillow_and_wand.gif')
+    resize_gif_using_okky_pillow_and_wand('/Users/digimon/Downloads/gif/original.gif',
+                                          save_as='/Users/digimon/Downloads/gif/original_1_okky_pillow_and_wand.gif')
 
 
 if __name__ == "__main__":
